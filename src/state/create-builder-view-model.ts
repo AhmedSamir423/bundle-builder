@@ -140,7 +140,7 @@ export function createBuilderViewModel(catalog: CatalogData, state: BuilderState
 
     const items: ReviewLineItemViewModel[] = catalog.products
       .filter((product) => product.category === categoryDefinition.id)
-      .flatMap((product) => {
+      .flatMap((product): ReviewLineItemViewModel[] => {
         const selection = state.selections[product.id] ?? normalizeSelection(product);
 
         if (product.variants?.length) {
@@ -183,7 +183,7 @@ export function createBuilderViewModel(catalog: CatalogData, state: BuilderState
       });
 
     return {
-      title: categoryTitles[categoryDefinition.id],
+      title: categoryTitles[categoryDefinition.id] ?? '',
       items,
     };
   });
