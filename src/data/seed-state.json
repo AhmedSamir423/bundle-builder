@@ -1,0 +1,63 @@
+{
+  "selections": {
+    "wyze-cam-v4": {
+      "activeVariantId": "white",
+      "quantitiesByVariant": {
+        "white": 1,
+        "grey": 0,
+        "black": 0
+      }
+    },
+    "wyze-cam-pan-v3": {
+      "activeVariantId": "white",
+      "quantitiesByVariant": {
+        "white": 2,
+        "black": 0
+      }
+    },
+    "wyze-cam-floodlight-v2": {
+      "activeVariantId": "white",
+      "quantitiesByVariant": {
+        "white": 0,
+        "black": 0
+      }
+    },
+    "wyze-duo-cam-doorbell": {
+      "activeVariantId": null,
+      "quantitiesByVariant": {
+        "default": 0
+      }
+    },
+    "wyze-battery-cam-pro": {
+      "activeVariantId": "white",
+      "quantitiesByVariant": {
+        "white": 0,
+        "black": 0
+      }
+    },
+    "cam-unlimited": {
+      "activeVariantId": null,
+      "quantitiesByVariant": {
+        "default": 1
+      }
+    },
+    "wyze-sense-motion-sensor": {
+      "activeVariantId": null,
+      "quantitiesByVariant": {
+        "default": 2
+      }
+    },
+    "wyze-sense-hub": {
+      "activeVariantId": null,
+      "quantitiesByVariant": {
+        "default": 1
+      }
+    },
+    "wyze-microsd-256gb": {
+      "activeVariantId": null,
+      "quantitiesByVariant": {
+        "default": 2
+      }
+    }
+  }
+}

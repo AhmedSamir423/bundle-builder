@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Wyze bundle-builder palette */
+  --color-ink: 11 13 16; /* #0B0D10 near-black */
+  --color-graphite: 31 31 31; /* #1F1F1F product titles / copy */
+  --color-muted: 111 120 130; /* #6F7882 secondary text */
+  --color-subtle: 168 178 189; /* #A8B2BD faint labels */
+  --color-panel: 255 255 255; /* card surface */
+  --color-panel-alt: 237 244 255; /* #EDF4FF light-blue panel */
+  --color-line: 206 214 222; /* #CED6DE dividers */
+  --color-line-soft: 230 235 240; /* #E6EBF0 hairlines */
+  --color-surface: 240 244 247; /* #F0F4F7 controls */
+  --color-accent: 78 47 210; /* #4E2FD2 Wyze purple */
+  --color-accent-soft: 237 244 255; /* #EDF4FF */
+  --color-success: 10 162 136; /* #0AA288 */
+  --color-danger: 216 57 43; /* #D8392B strike price */
+  color-scheme: light;
+  font-family: 'Manrope', system-ui, sans-serif;
+  background: #ffffff;
+}
+
+html {
+  background: #ffffff;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: rgb(var(--color-ink));
+  background: #ffffff;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(78, 47, 210, 0.16);
+}
