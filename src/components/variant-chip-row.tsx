@@ -20,7 +20,7 @@ export function VariantChipRow({ variants, activeVariantId, onSelectVariant }: V
             aria-pressed={isActive}
             onClick={() => onSelectVariant(variant.id)}
             className={cn(
-              'inline-flex h-[26px] items-center justify-center gap-[3px] rounded-[2px] border-[0.5px] px-[5px] transition-colors',
+              'inline-flex h-[26px] shrink-0 items-center justify-center gap-[2px] rounded-[2px] border-[0.5px] px-[4px] transition-colors',
               isActive
                 ? 'border-success bg-success/[0.06]'
                 : 'border-[#cccccc] bg-panel hover:border-accent/40',
@@ -31,7 +31,7 @@ export function VariantChipRow({ variants, activeVariantId, onSelectVariant }: V
                 src={variant.thumb}
                 alt=""
                 aria-hidden="true"
-                className="size-[22px] shrink-0 rounded-[5px] object-contain"
+                className="size-[20px] shrink-0 rounded-[5px] object-contain"
               />
             ) : (
               <span
@@ -39,7 +39,7 @@ export function VariantChipRow({ variants, activeVariantId, onSelectVariant }: V
                 style={{ backgroundColor: variant.swatch }}
               />
             )}
-            <span className="text-[10px] font-medium tracking-[0.6px] text-graphite">{variant.label}</span>
+            <span className="whitespace-nowrap text-[10px] font-medium text-graphite">{variant.label}</span>
           </button>
         );
       })}

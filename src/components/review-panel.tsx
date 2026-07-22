@@ -41,7 +41,7 @@ export function ReviewPanel({ viewModel }: ReviewPanelProps) {
   const monthly = viewModel.subtotal / 12;
 
   return (
-    <div className="rounded-[10px] bg-panelAlt pt-[15px]">
+    <div className="rounded-none bg-panelAlt pt-[15px] xl:rounded-[10px]">
       <p className="px-[15px] text-[12px] font-medium uppercase tracking-[1.6px] text-[#484848]">Review</p>
 
       <div className="flex flex-col gap-[10px] px-[20px] pb-[31px] pt-[20px]">

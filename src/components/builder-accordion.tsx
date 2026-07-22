@@ -23,7 +23,7 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
           >
             <div className="flex min-w-0 flex-1 items-center gap-[8px]">
               <CategoryIcon kind={category.definition.icon} />
-              <h2 className="min-w-0 flex-1 truncate text-[22px] font-semibold leading-none text-ink">
+              <h2 className="min-w-0 flex-1 text-[18px] font-semibold leading-[1.2] text-ink xl:text-[22px]">
                 {category.definition.title}
               </h2>
             </div>
@@ -36,7 +36,10 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
                 <ChevronIcon direction="up" />
               </span>
             ) : (
-              <span className="shrink-0 text-ink">
+              <span className="flex shrink-0 items-center gap-[4px] text-accent xl:text-ink">
+                <span className="text-[14px] font-medium leading-[16px] xl:hidden">
+                  {formatCountLabel(category.selectedCount)}
+                </span>
                 <ChevronIcon direction="down" />
               </span>
             )}
@@ -55,7 +58,7 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
         }
 
         return (
-          <section key={category.definition.id} className="rounded-[10px] bg-panelAlt pt-[15px]">
+          <section key={category.definition.id} className="rounded-none pt-[15px] xl:rounded-[10px] xl:bg-panelAlt">
             <p className="px-[15px] text-[12px] font-medium uppercase tracking-[1.6px] text-[#484848]">
               {stepLabel}
             </p>

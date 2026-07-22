@@ -19,7 +19,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <article
       className={cn(
-        'flex items-center gap-[15px] rounded-[10px] bg-panel p-[11px] transition-colors',
+        'flex h-full items-center gap-[15px] rounded-[10px] bg-panel p-[11px] transition-colors',
         isSelected ? 'border-2 border-accent/70' : 'border-2 border-transparent',
       )}
     >
@@ -56,13 +56,13 @@ export function ProductCard({ product }: ProductCardProps) {
             onDecrement={() => actions.decrementQuantity(definition.id)}
             onIncrement={() => actions.incrementQuantity(definition.id)}
           />
-          <div className="flex flex-col items-end gap-[3px] text-right text-[16px] tracking-[0.6px]">
+          <div className="flex flex-col items-end gap-[3px] text-right text-[16px] leading-none tracking-[0.6px]">
             {hasDiscount ? (
-              <span className="font-normal text-danger line-through">
+              <span className="font-normal leading-none text-danger line-through">
                 <Currency value={definition.compareAtPrice} />
               </span>
             ) : null}
-            <span className="font-normal text-[#575757]">
+            <span className="font-normal leading-none text-[#575757]">
               <Currency value={definition.price} />
               {definition.priceSuffix}
             </span>
