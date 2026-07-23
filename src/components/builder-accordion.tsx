@@ -68,8 +68,10 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
 
               {/* Desktop (xl): 2-col grid of horizontal cards, odd last card centered.
                   Below xl: a fluid row of vertical cards that wraps by available width
-                  (up to 5 across at the wide tablet size, down to 1 on a phone). */}
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(225px,1fr))] gap-[15px] xl:grid-cols-2">
+                  (up to 5 across at the wide tablet size, down to 1 on a phone). The 210px
+                  minimum keeps the 5-column range comfortably below the xl breakpoint so the
+                  transition into the desktop layout is a single, clean switch. */}
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-[15px] xl:grid-cols-2">
                 {category.products.map((product, productIndex) => {
                   const isLastOdd =
                     category.products.length % 2 === 1 && productIndex === category.products.length - 1;

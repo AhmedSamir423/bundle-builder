@@ -58,7 +58,7 @@ export function ProductCard({ product }: ProductCardProps) {
             onDecrement={() => actions.decrementQuantity(definition.id)}
             onIncrement={() => actions.incrementQuantity(definition.id)}
           />
-          <div className="flex flex-row items-center justify-end gap-[3px] text-right text-[16px] leading-none tracking-[0.6px] xl:flex-col xl:items-end">
+          <div className="flex flex-col items-end gap-[3px] text-right text-[16px] leading-none tracking-[0.6px]">
             {hasDiscount ? (
               <span className="font-normal leading-none text-danger line-through">
                 <Currency value={definition.compareAtPrice} />
