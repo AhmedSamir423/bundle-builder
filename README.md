@@ -24,9 +24,8 @@ and the UI stays usable and coherent down to mobile.
 ### 2. Clone
 
 ```bash
-git clone cd ..
 git clone https://github.com/AhmedSamir423/bundle-builder.git
-cd Bundle-Builder
+cd bundle-builder
 ```
 
 ### 3. Install dependencies
@@ -56,20 +55,20 @@ Additional checks: `npm run typecheck` (`tsc --noEmit`) and `npm run lint`.
 
 The app is **data-driven and rendered from a single source of truth**:
 
-- **Data (`src/data/`)** — `catalog.json` defines the categories/steps and products (title, image,
+- **Data (`src/data/`)** - `catalog.json` defines the categories/steps and products (title, image,
   price, compare-at price, optional badge, variants, etc.); `seed-state.json` defines the initial
   selection so the app loads looking like the design. Types live in `src/types/builder.ts`.
-- **State (`src/state/builder-provider.tsx`)** — `BuilderProvider` holds all state via a
-  `useReducer` store exposed through React Context. It seeds from `seed-state.json` (or restored
-  `localStorage`), owns every mutation, and persists on change.
-- **View model (`src/state/create-builder-view-model.ts`)** — a pure function derives everything the
+- **State (`src/state/builder-provider.tsx`)** - `BuilderProvider` holds all state via a
+  `useReducer` store exposed through React Context. It seeds from `seed-state.json` (or the last
+  saved `localStorage` config), owns every mutation, and persists only on an explicit save.
+- **View model (`src/state/create-builder-view-model.ts`)** - a pure function derives everything the
   UI renders from `(catalog, state)`: the per-step product lists and "N selected" counts, the grouped
   review line items (one line per variant with a quantity above zero), and the subtotal / pre-discount
   total / savings. Components stay presentational and read from this view model.
-- **Components (`src/components/`)** — `BuilderLayout` (responsive two-column shell), `BuilderAccordion`,
+- **Components (`src/components/`)** - `BuilderLayout` (responsive two-column shell), `BuilderAccordion`,
   `ProductCard`, `VariantChipRow`, `QuantityStepper`, and `ReviewPanel`, plus small presentational
   helpers (`ProductArtwork`, `Currency`, `Icons`).
-- **Responsive layout** — three states matching the Figma frames. **Desktop** (`xl`, ≥1280px): builder
+- **Responsive layout** - three states matching the Figma frames. **Desktop** (`xl`, ≥1280px): builder
   and review side by side, products in a 2-column grid of horizontal cards. **Tablet** (`md`–`lg`,
   768–1279px): review stacked below the builder, products as a row of vertical cards, and the review
   split into two columns. **Mobile** (<768px): a single full-bleed column with a mobile-only intro heading.
@@ -86,9 +85,10 @@ The app is **data-driven and rendered from a single source of truth**:
 - **Synchronized review panel.** The product-card steppers and the review-panel steppers dispatch to
   the same store, so changing one updates the other and the totals immediately. Every variant with a
   quantity above zero appears as its own review line.
-- **localStorage persistence.** State is serialized under a versioned key; on load the app restores
-  from `localStorage` and falls back to the seed. **Save my system for later** (and Checkout) persist
-  explicitly, and state is also written on every change so nothing is lost between visits.
+- **localStorage persistence.** Configuration changes stay in memory; clicking **Save my system for
+  later** (or Checkout) is the only action that writes the current configuration to `localStorage`
+  under a versioned key. On load the app restores the last **saved** configuration, falling back to
+  the seed when none exists.
 
 ## Tradeoffs
 
@@ -104,9 +104,9 @@ The app is **data-driven and rendered from a single source of truth**:
 - **Figma recreation (desktop).** Two-column builder + review, matched for layout, spacing, typography,
   color, corner radii, and element states (selected/unselected cards, active color chips, disabled/
   required steppers).
-- **Responsive layout.** Reproduces all three Figma frames at their breakpoints — side-by-side desktop,
+- **Responsive layout.** Reproduces all three Figma frames at their breakpoints - side-by-side desktop,
   a tablet layout (vertical product cards in a row, review stacked below in two columns), and a
-  single-column mobile layout — coherent all the way down to a phone.
+  single-column mobile layout - coherent all the way down to a phone.
 - **Accordion interactions.** Four steps expand/collapse, Step 1 open on load, headers show
   "STEP X OF 4" + icon + title with an open "N selected" up-chevron / collapsed down-chevron, and each
   open step ends with a **Next:** button that advances.
@@ -116,7 +116,7 @@ The app is **data-driven and rendered from a single source of truth**:
   variant surfaced as its own review line.
 - **Live review panel.** Grouped under Cameras / Sensors / Accessories / Plan, with a shipping row,
   satisfaction badge, financing line, struck-through pre-discount total, savings callout, Checkout, and
-  Save link — all updating from state.
+  Save link - all updating from state.
 - **JSON-driven architecture.** Everything renders from local JSON with a typed boundary.
 - **localStorage persistence.** Configure → save → leave → return restores the exact configuration.
 
