@@ -21,22 +21,12 @@ and the UI stays usable and coherent down to mobile.
 - **Node.js 20 or newer** (developed on Node 22; required by Vite 6)
 - npm (ships with Node)
 
-### 2. Clone
+### 2. Clone & Start the development server
 
 ```bash
 git clone https://github.com/AhmedSamir423/bundle-builder.git
 cd bundle-builder
-```
-
-### 3. Install dependencies
-
-```bash
 npm install
-```
-
-### 4. Start the development server
-
-```bash
 npm run dev
 ```
 
