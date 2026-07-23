@@ -32,7 +32,7 @@ npm run dev
 
 Then open the URL Vite prints (default `http://localhost:5173`).
 
-### 5. Build for production
+### 3. Build for production
 
 ```bash
 npm run build      # outputs to dist/
