@@ -187,14 +187,6 @@ export function BuilderProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [state]);
-
   const actions = useMemo(
     () => ({
       setActiveStep: (categoryId: ProductCategory | null) => dispatch({ type: 'setActiveStep', categoryId }),
