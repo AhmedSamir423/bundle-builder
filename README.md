@@ -24,7 +24,8 @@ and the UI stays usable and coherent down to mobile.
 ### 2. Clone
 
 ```bash
-git clone <repository-url>
+git clone cd ..
+git clone https://github.com/AhmedSamir423/bundle-builder.git
 cd Bundle-Builder
 ```
 
