@@ -68,8 +68,10 @@ The app is **data-driven and rendered from a single source of truth**:
 - **Components (`src/components/`)** — `BuilderLayout` (responsive two-column shell), `BuilderAccordion`,
   `ProductCard`, `VariantChipRow`, `QuantityStepper`, and `ReviewPanel`, plus small presentational
   helpers (`ProductArtwork`, `Currency`, `Icons`).
-- **Responsive layout** — two columns at `xl` (≥1280px); below that the panels stack into a single,
-  full-width column, with a mobile-only intro heading.
+- **Responsive layout** — three states matching the Figma frames. **Desktop** (`xl`, ≥1280px): builder
+  and review side by side, products in a 2-column grid of horizontal cards. **Tablet** (`md`–`lg`,
+  768–1279px): review stacked below the builder, products as a row of vertical cards, and the review
+  split into two columns. **Mobile** (<768px): a single full-bleed column with a mobile-only intro heading.
 
 ## Implementation Decisions
 
@@ -92,20 +94,18 @@ The app is **data-driven and rendered from a single source of truth**:
 - **Font substitution.** The Figma uses **Gilroy**, a proprietary font. The app uses **Manrope**
   (a close geometric sans) and matches the design's sizes, weights, line-heights, and letter-spacing.
 - **Pricing consistency.** The design's summary numbers are internally inconsistent (the card prices
-  don't reconcile to its headline total). The catalog is priced for internal consistency — the
+  don't reconcile to its headline total). The catalog is priced for internal consistency - the
   **savings figure ($50.92) matches the design**, and the total shown is the honest computed sum.
-- **Financing line.** The design's exact "as low as" figure isn't derivable from its numbers, so it is
-  computed as an illustrative monthly amount from the subtotal.
-- **Committed image assets.** Product and brand images are exported from the Figma into `public/`
-  (the Figma asset URLs are temporary), so the design renders from a clean clone with no external calls.
+
 
 ## Assignment Coverage
 
 - **Figma recreation (desktop).** Two-column builder + review, matched for layout, spacing, typography,
   color, corner radii, and element states (selected/unselected cards, active color chips, disabled/
   required steppers).
-- **Responsive layout.** Coherent and usable from desktop down to mobile (single-column stacking,
-  full-width panels, mobile intro heading).
+- **Responsive layout.** Reproduces all three Figma frames at their breakpoints — side-by-side desktop,
+  a tablet layout (vertical product cards in a row, review stacked below in two columns), and a
+  single-column mobile layout — coherent all the way down to a phone.
 - **Accordion interactions.** Four steps expand/collapse, Step 1 open on load, headers show
   "STEP X OF 4" + icon + title with an open "N selected" up-chevron / collapsed down-chevron, and each
   open step ends with a **Next:** button that advances.
@@ -121,7 +121,7 @@ The app is **data-driven and rendered from a single source of truth**:
 
 ## Notes
 
-- **No known unfinished required features** — all required functionality is implemented.
+- **No known unfinished required features** - all required functionality is implemented.
 - **Review add-controls follow the Figma:** the Cameras, Sensors, and Accessories lines have steppers,
   the required Sense Hub stepper is disabled, and the Plan and Shipping rows are static.
 - Steps 2–4 are only shown collapsed in the design; their **expanded** card layouts are rendered with

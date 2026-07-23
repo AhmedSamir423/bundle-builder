@@ -19,11 +19,13 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <article
       className={cn(
-        'flex h-full items-center gap-[15px] rounded-[10px] bg-panel p-[11px] transition-colors',
+        // Vertical card (image on top) up to the desktop breakpoint; horizontal (image left) at xl.
+        'flex h-full flex-col items-center justify-center gap-[19px] rounded-[10px] bg-panel px-[11px] py-[15px] transition-colors',
+        'xl:flex-row xl:justify-start xl:gap-[15px] xl:p-[11px]',
         isSelected ? 'border-2 border-accent/70' : 'border-2 border-transparent',
       )}
     >
-      <div className="relative h-[137px] w-[101px] shrink-0 overflow-hidden rounded-[5px] bg-panel">
+      <div className="relative aspect-[214/124] w-full shrink-0 overflow-hidden rounded-[5px] bg-panel xl:aspect-auto xl:h-[137px] xl:w-[101px]">
         <ProductArtwork kind={definition.kind} src={definition.image} />
         {definition.badge ? (
           <span className="absolute left-0 top-0 rounded-[10px] bg-accent px-[6px] py-[2px] text-[12px] font-semibold text-white">
@@ -32,12 +34,12 @@ export function ProductCard({ product }: ProductCardProps) {
         ) : null}
       </div>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-[10px]">
+      <div className="flex w-full min-w-0 flex-col gap-[10px] xl:flex-1">
         <div className="flex flex-col gap-[8px]">
-          <h3 className="text-[16px] font-semibold leading-none tracking-[-0.1px] text-graphite">
+          <h3 className="text-[18px] font-semibold leading-none tracking-[-0.1px] text-graphite xl:text-[16px]">
             {definition.title}
           </h3>
-          <p className="text-[12px] font-medium leading-[1.3] tracking-[0.4px] text-graphite/75">
+          <p className="text-[14px] font-medium leading-[1.3] tracking-[0.4px] text-graphite/75 xl:text-[12px]">
             {definition.description} <ProductLink />
           </p>
         </div>
@@ -56,7 +58,7 @@ export function ProductCard({ product }: ProductCardProps) {
             onDecrement={() => actions.decrementQuantity(definition.id)}
             onIncrement={() => actions.incrementQuantity(definition.id)}
           />
-          <div className="flex flex-col items-end gap-[3px] text-right text-[16px] leading-none tracking-[0.6px]">
+          <div className="flex flex-row items-center justify-end gap-[3px] text-right text-[16px] leading-none tracking-[0.6px] xl:flex-col xl:items-end">
             {hasDiscount ? (
               <span className="font-normal leading-none text-danger line-through">
                 <Currency value={definition.compareAtPrice} />

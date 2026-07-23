@@ -24,7 +24,9 @@ function LinePrice({ item }: { item: ReviewLineItemViewModel }) {
         </span>
       ) : null}
       <span className="font-semibold leading-[16px] text-accent">
-        {isFree ? 'FREE' : (
+        {isFree ? (
+          'FREE'
+        ) : (
           <>
             <Currency value={item.lineTotal} />
             {item.definition.priceSuffix}
@@ -41,44 +43,56 @@ export function ReviewPanel({ viewModel }: ReviewPanelProps) {
   const monthly = viewModel.subtotal / 12;
 
   return (
-    <div className="rounded-none bg-panelAlt pt-[15px] xl:rounded-[10px]">
+    <div className="rounded-none bg-panelAlt pt-[15px] md:rounded-[10px]">
       <p className="px-[15px] text-[12px] font-medium uppercase tracking-[1.6px] text-[#484848]">Review</p>
 
-      <div className="flex flex-col gap-[10px] px-[20px] pb-[31px] pt-[20px]">
-        <div className="flex flex-col gap-[5px] tracking-[0.6px]">
-          <h2 className="text-[22px] font-semibold leading-none text-graphite">Your security system</h2>
-          <p className="text-[14px] font-medium leading-[1.3] text-graphite/75">
-            Review your personalized protection system designed to keep what matters most safe.
-          </p>
-        </div>
+      {/* Tablet (lg, <xl): two columns — line items on the left, summary on the right.
+          Mobile and the desktop sidebar: a single stacked column. */}
+      <div className="flex flex-col gap-[10px] px-[20px] pb-[31px] pt-[20px] md:flex-row md:gap-[24px] lg:gap-[40px] xl:flex-col xl:gap-[10px]">
+        <div className="flex flex-col gap-[10px] md:min-w-0 md:flex-1 xl:flex-none">
+          <div className="flex flex-col gap-[5px] tracking-[0.6px]">
+            <h2 className="text-[22px] font-semibold leading-none text-graphite">Your security system</h2>
+            <p className="text-[14px] font-medium leading-[1.3] text-graphite/75">
+              Review your personalized protection system designed to keep what matters most safe.
+            </p>
+          </div>
 
-        <div className="flex flex-col gap-[10px]">
-          {groups.map((group) => {
-            const isPlan = group.title === 'Plan';
+          <div className="flex flex-col gap-[10px]">
+            {groups.map((group) => {
+              const isPlan = group.title === 'Plan';
+              // Only label a variant when the same product appears under more than one color.
+              const lineCountByProduct = group.items.reduce<Record<string, number>>((counts, item) => {
+                counts[item.definition.id] = (counts[item.definition.id] ?? 0) + 1;
+                return counts;
+              }, {});
 
-            return (
-              <section key={group.title} className="flex flex-col gap-[8px] border-t border-line pt-[15px]">
-                <p className="text-[12px] font-normal uppercase tracking-[0.36px] text-subtle">{group.title}</p>
+              return (
+                <section key={group.title} className="flex flex-col gap-[8px] border-t border-line pt-[15px]">
+                  <p className="text-[12px] font-normal uppercase tracking-[0.36px] text-subtle">{group.title}</p>
 
-                {isPlan
-                  ? group.items.map((item) => {
+                  {isPlan ? (
+                    group.items.map((item) => {
                       const [firstWord, ...rest] = item.definition.title.split(' ');
                       return (
                         <div key={item.key} className="flex items-start justify-between">
                           <div className="flex items-center gap-[3px]">
                             {item.definition.image ? (
-                              <img src={item.definition.image} alt="" aria-hidden="true" className="h-[24px] w-[20px] object-contain" />
+                              <img
+                                src={item.definition.image}
+                                alt=""
+                                aria-hidden="true"
+                                className="h-[24px] w-[20px] object-contain"
+                              />
                             ) : null}
                             <p className="text-[16px] font-bold leading-none tracking-[-0.03px] text-black">
-                              {firstWord}{' '}
-                              <span className="text-accent">{rest.join(' ')}</span>
+                              {firstWord} <span className="text-accent">{rest.join(' ')}</span>
                             </p>
                           </div>
                           <LinePrice item={item} />
                         </div>
                       );
                     })
-                  : (
+                  ) : (
                     <div className="flex flex-col gap-[12px]">
                       {group.items.map((item) => (
                         <div key={item.key} className="flex items-center gap-[16px]">
@@ -86,9 +100,16 @@ export function ReviewPanel({ viewModel }: ReviewPanelProps) {
                             <div className="size-[41px] shrink-0 overflow-hidden rounded-[5px] bg-panel">
                               <ProductArtwork kind={item.definition.kind} src={item.definition.image} compact />
                             </div>
-                            <p className="min-w-0 flex-1 text-[14px] font-medium leading-[16px] tracking-[0.07px] text-ink">
-                              {item.definition.title}
-                            </p>
+                            <div className="flex min-w-0 flex-1 flex-col">
+                              <p className="text-[14px] font-medium leading-[16px] tracking-[0.07px] text-ink">
+                                {item.definition.title}
+                              </p>
+                              {item.variant && (lineCountByProduct[item.definition.id] ?? 0) > 1 ? (
+                                <p className="text-[11px] font-medium uppercase tracking-[0.4px] text-subtle">
+                                  {item.variant.label}
+                                </p>
+                              ) : null}
+                            </div>
                             <QuantityStepper
                               quantity={item.quantity}
                               compact
@@ -106,33 +127,40 @@ export function ReviewPanel({ viewModel }: ReviewPanelProps) {
                       ))}
                     </div>
                   )}
-              </section>
-            );
-          })}
+                </section>
+              );
+            })}
 
-          {/* Shipping — presentational row, always free */}
-          <section className="flex flex-col gap-[8px] border-t border-line pt-[15px]">
-            <div className="flex items-center gap-[16px]">
-              <div className="flex min-w-0 flex-1 items-center gap-[12px]">
-                <div className="flex size-[41px] shrink-0 items-center justify-center rounded-[5px] bg-panel">
-                  <img src={truckIcon} alt="" aria-hidden="true" className="size-[29px] object-contain" />
+            {/* Shipping — presentational row, always free */}
+            <section className="flex flex-col gap-[8px] border-t border-line pt-[15px]">
+              <div className="flex items-center gap-[16px]">
+                <div className="flex min-w-0 flex-1 items-center gap-[12px]">
+                  <div className="flex size-[41px] shrink-0 items-center justify-center rounded-[5px] bg-panel">
+                    <img src={truckIcon} alt="" aria-hidden="true" className="size-[29px] object-contain" />
+                  </div>
+                  <p className="min-w-0 flex-1 text-[14px] font-medium leading-[16px] tracking-[0.07px] text-ink">
+                    Fast Shipping
+                  </p>
                 </div>
-                <p className="min-w-0 flex-1 text-[14px] font-medium leading-[16px] tracking-[0.07px] text-ink">
-                  Fast Shipping
-                </p>
+                <div className="flex shrink-0 flex-col items-end whitespace-nowrap text-[14px] tracking-[0.07px]">
+                  <span className="font-medium leading-[16px] text-muted line-through">$5.99</span>
+                  <span className="font-semibold leading-[16px] text-accent">FREE</span>
+                </div>
               </div>
-              <div className="flex shrink-0 flex-col items-end whitespace-nowrap text-[14px] tracking-[0.07px]">
-                <span className="font-medium leading-[16px] text-muted line-through">$5.99</span>
-                <span className="font-semibold leading-[16px] text-accent">FREE</span>
-              </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-[8px]">
+        {/* Summary column: badge, financing, total, checkout, save. */}
+        <div className="flex flex-col gap-[8px] md:w-[380px] md:shrink-0 lg:w-[420px] xl:w-full">
           <div className="flex flex-col gap-[4px]">
-            <div className="flex items-center justify-between">
-              <img src={satisfactionBadge} alt="100% Wyze satisfaction guarantee" className="size-[78px] shrink-0 object-contain" />
+            {/* Narrow summary head (mobile + desktop sidebar) */}
+            <div className="flex items-center justify-between md:hidden xl:flex">
+              <img
+                src={satisfactionBadge}
+                alt="100% Wyze satisfaction guarantee"
+                className="size-[78px] shrink-0 object-contain"
+              />
               <div className="flex flex-col items-end gap-[8px]">
                 <span className="rounded-[3px] bg-accent px-[8px] py-[5px] text-[12px] font-medium tracking-[-0.6px] text-white">
                   as low as {formatCurrency(monthly)}/mo
@@ -148,8 +176,38 @@ export function ReviewPanel({ viewModel }: ReviewPanelProps) {
               </div>
             </div>
 
+            {/* Wide summary head (tablet 2-column only): adds the returns copy */}
+            <div className="hidden flex-col gap-[16px] md:flex xl:hidden">
+              <div className="flex items-center gap-[25px]">
+                <img
+                  src={satisfactionBadge}
+                  alt="100% Wyze satisfaction guarantee"
+                  className="size-[131px] shrink-0 object-contain"
+                />
+                <div className="flex-1 text-[18px] leading-[1.1] tracking-[0.6px] text-graphite">
+                  <p className="font-semibold">30-day hassle-free returns</p>
+                  <p className="mt-[18px] font-medium">
+                    If you&rsquo;re not totally in love with the product, we will refund you 100%.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="rounded-[3px] bg-accent p-[8px] text-[16px] font-medium tracking-[-0.8px] text-white">
+                  as low as {formatCurrency(monthly)}/mo
+                </span>
+                <div className="flex items-baseline gap-[8px] whitespace-nowrap">
+                  <span className="text-[22px] font-medium leading-[20px] tracking-[0.055px] text-muted line-through">
+                    <Currency value={viewModel.originalSubtotal} />
+                  </span>
+                  <span className="text-[28px] font-bold leading-[32px] tracking-[-0.035px] text-accent">
+                    <Currency value={viewModel.subtotal} />
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-col gap-[4px] pt-[10px]">
-              <p className="text-center text-[12px] font-semibold tracking-[-0.056px] text-success">
+              <p className="text-center text-[12px] font-semibold tracking-[-0.056px] text-success md:text-[14px] xl:text-[12px]">
                 Congrats! You&rsquo;re saving <Currency value={viewModel.savings} /> on your security bundle!
               </p>
               <button

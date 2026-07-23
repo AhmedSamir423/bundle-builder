@@ -23,7 +23,7 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
           >
             <div className="flex min-w-0 flex-1 items-center gap-[8px]">
               <CategoryIcon kind={category.definition.icon} />
-              <h2 className="min-w-0 flex-1 text-[18px] font-semibold leading-[1.2] text-ink xl:text-[22px]">
+              <h2 className="min-w-0 flex-1 text-[18px] font-semibold leading-[1.2] text-ink md:text-[22px]">
                 {category.definition.title}
               </h2>
             </div>
@@ -36,8 +36,8 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
                 <ChevronIcon direction="up" />
               </span>
             ) : (
-              <span className="flex shrink-0 items-center gap-[4px] text-accent xl:text-ink">
-                <span className="text-[14px] font-medium leading-[16px] xl:hidden">
+              <span className="flex shrink-0 items-center gap-[4px] text-accent md:text-ink">
+                <span className="text-[14px] font-medium leading-[16px] md:hidden">
                   {formatCountLabel(category.selectedCount)}
                 </span>
                 <ChevronIcon direction="down" />
@@ -58,7 +58,7 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
         }
 
         return (
-          <section key={category.definition.id} className="rounded-none pt-[15px] xl:rounded-[10px] xl:bg-panelAlt">
+          <section key={category.definition.id} className="rounded-none pt-[15px] md:rounded-[10px] md:bg-panelAlt">
             <p className="px-[15px] text-[12px] font-medium uppercase tracking-[1.6px] text-[#484848]">
               {stepLabel}
             </p>
@@ -66,7 +66,10 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
             <div className="mt-[15px] flex flex-col gap-[15px] border-t-[0.5px] border-[#1f1f1f] px-[15px] py-[20px]">
               {header}
 
-              <div className="grid grid-cols-1 gap-[15px] sm:grid-cols-2">
+              {/* Desktop (xl): 2-col grid of horizontal cards, odd last card centered.
+                  Below xl: a fluid row of vertical cards that wraps by available width
+                  (up to 5 across at the wide tablet size, down to 1 on a phone). */}
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(225px,1fr))] gap-[15px] xl:grid-cols-2">
                 {category.products.map((product, productIndex) => {
                   const isLastOdd =
                     category.products.length % 2 === 1 && productIndex === category.products.length - 1;
@@ -74,7 +77,7 @@ export function BuilderAccordion({ categories }: Pick<BuilderViewModel, 'categor
                   return (
                     <div
                       key={product.definition.id}
-                      className={isLastOdd ? 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-7.5px)]' : ''}
+                      className={isLastOdd ? 'xl:col-span-2 xl:mx-auto xl:w-[calc(50%-7.5px)]' : ''}
                     >
                       <ProductCard product={product} />
                     </div>

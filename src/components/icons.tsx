@@ -29,7 +29,7 @@ export function ChevronIcon({ direction }: { direction: ChevronDirection }) {
 
 export function CategoryIcon({ kind }: { kind: 'camera' | 'plan' | 'sensor' | 'shield' }) {
   return (
-    <span className="flex size-[20px] shrink-0 items-center justify-center xl:size-[26px]" aria-hidden="true">
+    <span className="flex size-[20px] shrink-0 items-center justify-center md:size-[26px]" aria-hidden="true">
       <img src={categoryIconFile[kind]} alt="" className="h-full w-full object-contain" />
     </span>
   );
